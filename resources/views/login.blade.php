@@ -1,12 +1,14 @@
 @extends('layouts.master')
 
+@section('title', 'Login')
+
 @section('content')
     <div class="login-form">
         <form action="{{route('login')}}" method="post">
             @csrf
             <div class="form-group">
                 <label>Email Address</label>
-                <input class="au-input au-input--full" type="email" name="email" placeholder="Email">
+                <input class="au-input au-input--full" type="email" name="email" placeholder="Email" value="{{old('email')}}">
                 @error('email')
                     <small class="text-danger">{{$message}}</small>
                 @enderror
