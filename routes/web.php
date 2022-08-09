@@ -29,9 +29,12 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     //dashboard
     Route::get('dashboard',[AuthController::class, 'dashboard'] )->name('dashboard');
 
-    // admin //list
+    // admin //category
     Route::group(['prefix' => 'category', 'middleware' => 'admin_auth'], function() {
         Route::get('list', [CategoryController::class, 'list'])->name('category#list');
+        Route::get('create/page', [CategoryController::class, 'createPage'])->name('category#createPage');
+        Route::post('create', [CategoryController::class, 'create'])->name('category#create');
+        Route::get('delete/{id}', [CategoryController::class, 'delete'])->name('category#delete');
     });
 
 
