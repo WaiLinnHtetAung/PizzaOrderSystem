@@ -152,6 +152,12 @@
                                                     <i class="zmdi zmdi-account"></i>Account</a>
                                             </div>
                                         </div>
+                                        <div class="account-dropdown__body">
+                                            <div class="account-dropdown__item">
+                                                <a href="{{route('admin#changePasswordPage')}}">
+                                                    <i class="fa-solid fa-key"></i></i>Change Password</a>
+                                            </div>
+                                        </div>
                                         <div class="account-dropdown__footer">
                                             <form action="{{route('logout')}}" method="post">
                                                 @csrf

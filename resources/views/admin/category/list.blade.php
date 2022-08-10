@@ -78,18 +78,18 @@
                         <tbody>
                             @foreach ($categories as $category)
                                 <tr class="tr-shadow">
-                                <td>{{$category->category_id}}</td>
+                                <td>{{$category->id}}</td>
                                 <td class="col-5">{{$category->name}}</td>
                                 <td>{{$category->created_at->format('j-F-Y')}}</td>
                                 <td>
                                     <div class="table-data-feature">
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="View">
+                                        {{-- <button class="item" data-toggle="tooltip" data-placement="top" title="View">
                                             <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                        </button> --}}
+                                        <button onclick="window.location='{{route('category#edit',$category->id)}}'" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
                                             <i class="zmdi zmdi-edit"></i>
                                         </button>
-                                        <button id="delete-btn" onclick="window.location='{{route('category#delete',$category->category_id)}}'" class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                        <button id="delete-btn" onclick="window.location='{{route('category#delete',$category->id)}}'" class="item" data-toggle="tooltip" data-placement="top" title="Delete">
                                             <i class="zmdi zmdi-delete"></i>
                                         </button>
                                     </div>
