@@ -64,6 +64,16 @@
                     @endif
                 </div>
 
+                {{-- passowrd changed message  --}}
+                <div class="col-6 offset-6">
+                    @if (session('passwordChanged'))
+                    <div class="alert alert-warning alert-dismissible fade show">
+                        <i class="fa-solid fa-thumbs-up me-2"></i>&nbsp;<span>{{session('passwordChanged')}}</span>
+                        <button type="button" data-bs-dismiss='alert' class="btn-close"></button>
+                    </div>
+                    @endif
+                </div>
+
                 @if (count($categories) != 0 )
                 <div class="table-responsive table-responsive-data2">
                     <table class="table table-data2 text-center">

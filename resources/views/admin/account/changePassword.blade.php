@@ -19,17 +19,27 @@
                             <h3 class="text-center title-2">Change Password</h3>
                         </div>
                         <hr>
+
+                        {{-- password not match message --}}
+                        <div class="col-12 ">
+                            @if (session('notMatch'))
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <i class="fa-solid fa-triangle-exclamation me-2"></i>&nbsp;<span>{{session('notMatch')}}</span>
+                                    <button type="button" data-bs-dismiss='alert' class="btn-close"></button>
+                                </div>
+                            @endif
+                        </div>
+
+
                         <form action="{{route('admin#changePassword')}}" method="post" novalidate="novalidate">
                             @csrf
                             <div class="form-group">
                                 <label for="cc-payment" class="control-label mb-1">Current Password</label>v
-                                <input id="cc-pament" name="currentPassword" type="password" class="form-control @session('notMatch') is-invalid @endsession @error('currentPassword') is-invalid @enderror" aria-required="true" aria-invalid="false" >
+                                <input id="cc-pament" name="currentPassword" type="password" class="form-control @error('currentPassword') is-invalid @enderror" aria-required="true" aria-invalid="false" >
                                  @error('currentPassword')
                                      <div class="invalid-feedback">{{$message}}</div>
                                  @enderror
-                                 @if (session('notMatch'))
-                                     <div class="invalid-feedback">{{session('notMatch')}}</div>
-                                 @endif
+
                             </div>
                             <div class="form-group">
                                 <label for="cc-payment" class="control-label mb-1">New Password</label>

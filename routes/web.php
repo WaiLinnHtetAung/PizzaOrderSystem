@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 
 /*
@@ -23,7 +24,7 @@ Route::get('loginPage', [AuthController::class, 'loginPage'])->name('auth#loginP
 Route::get('registerPage', [AuthController::class, 'registerPage'])->name('auth#registerPage');
 
 
-Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
 
     //dashboard
@@ -42,10 +43,15 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
             Route::post('update', [CategoryController::class, 'update'])->name('category#update');
         });
 
-        //password
+        //Account
         Route::prefix('admin')->group(function() {
-            Route::get('password/changePage', [AuthController::class, 'changePasswordPage'])->name('admin#changePasswordPage');
-            Route::post('change/password', [AuthController::class, 'changePassword'])->name('admin#changePassword');
+
+            //password
+            Route::get('password/changePage', [AdminController::class, 'changePasswordPage'])->name('admin#changePasswordPage');
+            Route::post('change/password', [AdminController::class, 'changePassword'])->name('admin#changePassword');
+
+            //profile
+            Route::get('profile', [AdminController::class, 'profile'])->name('admin#profile');
         });
     });
 
