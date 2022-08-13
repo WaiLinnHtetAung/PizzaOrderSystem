@@ -37,6 +37,18 @@
             </div>
 
             <div class="form-group">
+                <label>Gender</label>
+                <select name="gender" id="" class="form-control">
+                    <option value="" disabled selected>Choose your gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                @error('gender')
+                <small class="text-danger">{{$message}}</small>
+                @enderror
+            </div>
+
+            <div class="form-group">
                 <label>Address</label>
                 <input class="au-input au-input--full" type="text" name="address" placeholder="Address" value="{{old('address')}}">
                 @error('address')

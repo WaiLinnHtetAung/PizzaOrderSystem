@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Storage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,43 @@ class AdminController extends Controller
         return view('admin.account.profile');
     }
 
+    // ================Edit admin profile===============
+    public function edit() {
+        return view('admin.account.edit');
+    }
+
+    // ===================Update Profile=================
+    public function update($id, Request $request) {
+        $this->profileValidationCheck($request);
+
+        $data = $this->getProfileData($request);
+
+        /*image store and change
+        1. check and get old image name ==> delete it
+        2. upload image
+        */
+
+        if($request->hasFile('image')) {
+            $dbImage = User::where('id', $id)->first();
+            $dbImage = $dbImage->image;
+
+            if($dbImage != null) {
+                Storage::delete('public/'. $dbImage);
+            }
+
+            $fileName = uniqid() . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public',$fileName);
+            $data['image'] = $fileName;
+
+        }
+
+        User::where('id', $id)->update($data);
+
+        return redirect()->route('admin#profile')->with(['updateProfileSuccess' => 'Profile is updated successfully']);
+    }
+
+
+
 
 
 
@@ -61,5 +99,28 @@ class AdminController extends Controller
             'newPassword' => 'required | min:6',
             'confirmPassword' => 'required | min:6 | same:newPassword'
         ])->validate();
+    }
+
+    // ==================update profile validation check ===========
+    private function profileValidationCheck($request) {
+        Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+
+        ] )->validate();
+    }
+
+    // =====================get profile data=================
+    private function getProfileData($request) {
+        return [
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+            'address' => $request->address,
+        ];
     }
 }
