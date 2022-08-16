@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('category_id');
             $table->string('name');
             $table->longText('description');
+            $table->string('waiting_time');
             $table->string('image')->nullable(true);
             $table->integer('price');
             $table->integer('view_count')->default(0);

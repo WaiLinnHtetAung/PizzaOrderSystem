@@ -34,7 +34,10 @@
                                         @endif
 
                                         <div class="mt-3">
-                                            <input type="file" name="image" id="" class="form-control">
+                                            <input type="file" name="image" id="" class="form-control @error('image') is-invalid @enderror" >
+                                            @error('image')
+                                                <div class="invalid-feedback">{{$message}}</div>
+                                            @enderror
                                         </div>
                                         <div class="mt-5">
                                             <button id="payment-button" type="submit"
@@ -82,8 +85,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="cc-payment" class="control-label mb-1">Gender</label>
-                                            <select name="gender" id="" class="form-control  @error('gender') is-invalid @enderror">
-                                                <option value="" disabled selected>Choose your gender</option>
+                                            <select name="gender" id="" class="form-select  @error('gender') is-invalid @enderror">
+                                                <option value="" disabled selected class="text-muted">Choose your gender</option>
                                                 <option value="male" @if(Auth::user()->gender == 'male') selected @endif>Male</option>
                                                 <option value="female" @if(Auth::user()->gender == 'female') selected @endif>Female</option>
                                             </select>

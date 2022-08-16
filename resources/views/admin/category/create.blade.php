@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title">
-                            <h3 class="text-center title-2">Category Category</h3>
+                            <h3 class="text-center title-2">Create Category</h3>
                         </div>
                         <hr>
                         <form action="{{route('category#create')}}" method="post" novalidate="novalidate">

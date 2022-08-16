@@ -63,8 +63,8 @@
                                 <i class="fa-solid fa-list"></i>Category</a>
                         </li>
                         <li>
-                            <a href="customerList.html">
-                                <i class="fas fa-chart-bar"></i>Customers</a>
+                            <a href="{{route('products#list')}}">
+                                <i class="fa-solid fa-pizza-slice"></i>Product List</a>
                         </li>
                     </ul>
                 </nav>
