@@ -64,11 +64,11 @@
                     @endif
                 </div>
 
-                {{-- passowrd changed message  --}}
+                {{-- updated product message  --}}
                 <div class="col-6 offset-6">
-                    @if (session('passwordChanged'))
-                    <div class="alert alert-warning alert-dismissible fade show">
-                        <i class="fa-solid fa-thumbs-up me-2"></i>&nbsp;<span>{{session('passwordChanged')}}</span>
+                    @if (session('updateSuccess'))
+                    <div class="alert alert-success alert-dismissible fade show">
+                        <i class="fa-solid fa-thumbs-up me-2"></i>&nbsp;<span>{{session('updateSuccess')}}</span>
                         <button type="button" data-bs-dismiss='alert' class="btn-close"></button>
                     </div>
                     @endif
@@ -98,7 +98,7 @@
                                         <button onclick="location='{{route('products#detail', $product->id)}}'" class="item" data-toggle="tooltip" data-placement="top" title="View">
                                             <i class="fa-solid fa-eye"></i>
                                         </button>
-                                        <button  class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                        <button onclick="location='{{route('products#editPage', $product->id)}}'" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
                                             <i class="zmdi zmdi-edit"></i>
                                         </button>
                                         <button id="delete-btn" onclick="location='{{route('products#delete', $product->id)}}'" class="item" data-toggle="tooltip" data-placement="top" title="Delete">

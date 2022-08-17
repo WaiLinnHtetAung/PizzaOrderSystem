@@ -8,9 +8,9 @@
         <div class="section__content section__content--p30">
             <div class="container-fluid">
                 <div class="row me-2 ">
-                    <div class="col-lg-3 offset-9 ">
-                        <a href="{{ route('admin#edit') }}" class="me-2"><button class="btn bg-primary text-white my-3"><i
-                                    class="fa-solid fa-user-pen me-2"></i>Edit</button></a>
+                    <div class="col-lg-2 offset-10 ">
+                        {{-- <a href="{{ route('admin#edit') }}" class="me-2"><button class="btn bg-primary text-white my-3"><i
+                                    class="fa-solid fa-user-pen me-2"></i>Edit</button></a> --}}
 
                         <button class="btn bg-dark text-white my-3" onclick="history.back()"><i class="fa-solid fa-arrow-left me-2"></i>Back</button>
                     </div>
