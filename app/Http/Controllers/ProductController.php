@@ -15,13 +15,14 @@ class ProductController extends Controller
 
         $products = Product::when(request('search_product'), function($query) {
                             $key = request('search_product');
-                            $query->where('name', 'like', "%$key%");
+                            $query->where('products.name', 'like', "%$key%");
                             })
-                            ->orderBy('id', 'desc')
+                            ->select('products.*', 'categories.name as category_name')
+                            ->join('categories', 'products.category_id', 'categories.id')
+                            ->orderBy('products.id', 'desc')
                             ->paginate(4);
 
         $products->appends(request()->all());
-
         return view('admin.products.list', compact('products'));
     }
 
@@ -56,7 +57,10 @@ class ProductController extends Controller
 
     // --------------------Detail product----------------------
     public function detail($id) {
-        $product = Product::where('id', $id)->first();
+        $product = Product::select('products.*', 'categories.name as category_name')
+                            ->where('products.id', $id)
+                            ->join('categories', 'products.category_id', 'categories.id')
+                            ->first();
 
         return view('admin.products.detail', compact('product'));
     }

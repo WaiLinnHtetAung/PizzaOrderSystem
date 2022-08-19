@@ -39,7 +39,7 @@
                                 </div>
 
                                 <div class="col-7 offset-1 mb-5 mt-2">
-                                    <h2 class="mb-5">{{ $product->name }} &nbsp;&nbsp; <span class="h5"><i class="fa-solid fa-layer-group me-3"></i>{{ $product->category_id }}</span> </h2>
+                                    <h2 class="mb-5">{{ $product->name }} &nbsp;&nbsp; <span class="h5"><i class="fa-solid fa-layer-group me-2"></i>{{ $product->category_name }}</span> </h2>
                                     <div class="mb-4">
                                         <span class="h5 btn bg-dark text-white" title="price"><i class="fa-solid fa-money-bill-1-wave me-2"></i>{{ $product->price }} MMK</span>
                                         <span class="h5 btn bg-dark text-white" title="waiting time"><i class="fa-solid fa-eye me-2"></i>{{ $product->waiting_time }} minus</span>

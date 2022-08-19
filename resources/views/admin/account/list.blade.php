@@ -1,10 +1,10 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Product List')
+@section('title', 'Admin List')
 
 @section('search-bar')
-    <form class="form-header" action="{{route('products#list')}}" method="get">
-        <input class="au-input au-input--xl" type="text" name="search_product" value="{{request('search_product')}}" placeholder="Search for datas &amp; reports..." />
+    <form class="form-header" action="{{route('admin#list')}}" method="get">
+        <input class="au-input au-input--xl" type="text" name="search_account" value="{{request('search_account')}}" placeholder="Search for datas &amp; reports..." />
         <button class="au-btn--submit" type="submit">
             <i class="zmdi zmdi-search"></i>
         </button>
@@ -18,19 +18,20 @@
         <div class="container-fluid">
             <div class="col-md-12">
 
+                <div class=" text-center my-3">
+                    <h2 class="title-1">Admin List</h2>
+
+                </div>
+
                 <!-- DATA TABLE -->
                 <div class="table-data__tool">
-                    <div class="table-data__tool-left">
+                    {{-- <div class="table-data__tool-left">
                         <div class="overview-wrap">
                             <h2 class="title-1">Product List</h2>
 
                         </div>
                     </div>
 
-                    {{-- total category  --}}
-                    <div class="h3 text-primary">
-                        Total - {{$products->total()}}
-                    </div>
 
                     <div class="table-data__tool-right">
                         <a href="{{ route('products#createPage') }}">
@@ -41,8 +42,16 @@
                         <button class="au-btn au-btn-icon au-btn--green au-btn--small">
                             CSV download
                         </button>
+                    </div> --}}
+
+                    {{-- total category  --}}
+                    <div class="h3 text-primary">
+                        Total - {{$admins->total()}}
                     </div>
+
                 </div>
+
+
 
                 {{-- created success message  --}}
                 <div class="col-6 offset-6">
@@ -56,9 +65,9 @@
 
                 {{-- deleted success message  --}}
                 <div class="col-6 offset-6" id="delete-alert">
-                    @if (session('deletedProduct'))
+                    @if (session('deleteSuccess'))
                         <div class="alert alert-warning alert-dismissible fade show">
-                            <i class="fa-solid fa-circle-check"></i>&nbsp;<span>{{session('deletedProduct')}}</span>
+                            <i class="fa-solid fa-circle-check"></i>&nbsp;<span>{{session('deleteSuccess')}}</span>
                             <button type="button" data-bs-dismiss='alert' class="btn-close"></button>
                         </div>
                     @endif
@@ -74,37 +83,52 @@
                     @endif
                 </div>
 
-                @if (count($products) != 0 )
+                @if (count($admins) != 0 )
                 <div class="table-responsive table-responsive-data2">
                     <table class="table table-data2 text-center">
                         <thead>
                             <tr>
                                 <th>Image</th>
                                 <th>Name</th>
-                                <th>Price</th>
-                                <th>Category</th>
+                                <th>Email</th>
+                                <th>Gender</th>
+                                <th>Address</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
+                            @foreach ($admins as $admin)
                                 <tr class="tr-shadow">
-                                <td class="col-1" ><img src="{{asset('storage/'.$product->image)}}" alt="" class="img-thumbnail shadow " ></td>
-                                <td class="col-2">{{$product->name}}</td>
-                                <td class="col-2">{{$product->price}}</td>
-                                <td class="col-2">{{$product->category_name}}</td>
+                                <td class="col-2" >
+                                    @if ($admin->image == null)
+                                        @if($admin->gender == 'male')
+                                            <img src="{{asset('admin/images/default_user.png')}}" class="img-thumbnail shadow " alt="">
+                                        @else
+                                            <img src="{{asset('admin/images/female-default.jpg')}}" class="img-thumbnail shadow " alt="">
+                                        @endif
+                                    @else
+                                    <img src="{{asset('storage/'.$admin->image)}}" alt="" class="img-thumbnail shadow " >
+                                    @endif
+                                </td>
+                                <td class="col-2">{{$admin->name}}</td>
+                                <td class="col-2">{{$admin->email}}</td>
+                                <td class="col-2">{{$admin->gender}}</td>
+                                <td class="col-2">{{$admin->address}}</td>
                                 <td class="col-2">
-                                    <div class="table-data-feature">
-                                        <button onclick="location='{{route('products#detail', $product->id)}}'" class="item" data-toggle="tooltip" data-placement="top" title="View">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                        <button onclick="location='{{route('products#editPage', $product->id)}}'" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="zmdi zmdi-edit"></i>
-                                        </button>
-                                        <button id="delete-btn" onclick="location='{{route('products#delete', $product->id)}}'" class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="zmdi zmdi-delete"></i>
-                                        </button>
-                                    </div>
+                                    {{-- delete acc except owner  --}}
+                                    @if (Auth::user()->id == $admin->id)
+
+                                    @else
+                                        <div class="table-data-feature">
+                                            <button id="delete-btn" onclick="location=''" class="item" data-toggle="tooltip" data-placement="top" title="Change Role">
+                                                <i class="fa-solid fa-person-circle-check"></i>
+                                            </button>
+                                            <button id="delete-btn" onclick="location='{{route('admin#delete', $admin->id)}}'" class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                <i class="zmdi zmdi-delete"></i>
+                                            </button>
+                                        </div>
+                                    @endif
+
                                 </td>
 
                                 </tr>
@@ -113,7 +137,7 @@
                         </tbody>
                     </table>
                     <div class="mt-3">
-                        {{$products->links()}}
+                        {{$admins->links()}}
                     </div>
                 </div>
                 <!-- END DATA TABLE -->

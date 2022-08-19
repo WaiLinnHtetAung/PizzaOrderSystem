@@ -86,6 +86,34 @@ class AdminController extends Controller
 
 
 
+    // ============================Admin List========================
+
+    // --------------admin list-------------
+    public function list() {
+        $admins = User::when(request('search_account'), function($query) {
+                        $key = request('search_account');
+                        $query->orWhere('name','like', "%$key%")
+                              ->orWhere('email','like', "%$key%")
+                              ->orWhere('address','like', "%$key%")
+                              ->orWhere('phone','like', "%$key%")
+                              ->orWhere('gender','like', "%$key%");
+
+                    })
+                        ->where('role', 'admin')->paginate(3);
+
+        $admins->appends(request()->all());
+        return view('admin.account.list', compact('admins'));
+    }
+
+    // -----------------delete admin account--------------
+    public function delete($id) {
+        User::where('id', $id)->delete();
+
+        return redirect()->route('admin#list')->with(['deleteSuccess' => 'Account is deleted successfully.']);
+    }
+
+
+
 
 
 
