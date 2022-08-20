@@ -112,6 +112,13 @@ class AdminController extends Controller
         return redirect()->route('admin#list')->with(['deleteSuccess' => 'Account is deleted successfully.']);
     }
 
+    // -------------------change admin role----------------
+    public function changeRole($role, $id) {
+        User::where('id', $id)->update(['role'=>$role]);
+
+        return redirect()->route('admin#list')->with(['changeRoleSuccess' => "Account's role is switched successfully."]);
+    }
+
 
 
 
@@ -152,4 +159,6 @@ class AdminController extends Controller
             'address' => $request->address,
         ];
     }
+
+
 }

@@ -53,15 +53,7 @@
 
 
 
-                {{-- created success message  --}}
-                <div class="col-6 offset-6">
-                    @if (session('createdProduct'))
-                        <div class="alert alert-success alert-dismissible fade show">
-                            <i class="fa-solid fa-circle-check"></i>&nbsp;<span>{{session('createdProduct')}}</span>
-                            <button type="button" data-bs-dismiss='alert' class="btn-close"></button>
-                        </div>
-                    @endif
-                </div>
+
 
                 {{-- deleted success message  --}}
                 <div class="col-6 offset-6" id="delete-alert">
@@ -73,11 +65,11 @@
                     @endif
                 </div>
 
-                {{-- updated product message  --}}
+                {{-- change role message  --}}
                 <div class="col-6 offset-6">
-                    @if (session('updateSuccess'))
+                    @if (session('changeRoleSuccess'))
                     <div class="alert alert-success alert-dismissible fade show">
-                        <i class="fa-solid fa-thumbs-up me-2"></i>&nbsp;<span>{{session('updateSuccess')}}</span>
+                        <i class="fa-solid fa-thumbs-up me-2"></i>&nbsp;<span>{{session('changeRoleSuccess')}}</span>
                         <button type="button" data-bs-dismiss='alert' class="btn-close"></button>
                     </div>
                     @endif
@@ -119,13 +111,24 @@
                                     @if (Auth::user()->id == $admin->id)
 
                                     @else
-                                        <div class="table-data-feature">
-                                            <button id="delete-btn" onclick="location=''" class="item" data-toggle="tooltip" data-placement="top" title="Change Role">
-                                                <i class="fa-solid fa-person-circle-check"></i>
-                                            </button>
-                                            <button id="delete-btn" onclick="location='{{route('admin#delete', $admin->id)}}'" class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
+                                        <div class="d-flex">
+                                            {{-- ------change role-----  --}}
+                                            <div class="dropdown me-3">
+                                                <a href="#" class="btn btn-sm btn-primary rounded dropdown-toggle"  data-bs-toggle="dropdown">
+                                                Change Role
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-dark">
+                                                    <a href="{{route('admin#changeRole',['user',$admin->id])}}"  name="user" class="dropdown-item">User</a>
+                                                    <a href="{{route('admin#changeRole',['admin', $admin->id])}}"  name="admin" class="dropdown-item">Admin</a>
+                                                </div>
+                                            </div>
+                                            {{-- ---------change role end-----------  --}}
+
+                                            <div class="table-data-feature">
+                                                <button id="delete-btn" onclick="location='{{route('admin#delete', $admin->id)}}'" class="item " data-toggle="tooltip" data-placement="top" title="Delete">
+                                                    <i class="zmdi zmdi-delete fs-4"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     @endif
 

@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
             //Admin list
             Route::get('list', [AdminController::class, 'list'])->name('admin#list');
             Route::get('delete/{id}', [AdminController::class, 'delete'])->name('admin#delete');
+            Route::get('change/{role}/{id}', [AdminController::class, 'changeRole'])->name('admin#changeRole');
         });
 
         //Products
