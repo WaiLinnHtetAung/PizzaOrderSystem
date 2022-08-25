@@ -15,6 +15,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
     <!-- Font Awesome -->
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -65,20 +68,30 @@
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             <a href="" class="btn px-0">
                                 <i class="fas fa-heart text-primary"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">{{Cart::instance('wishList')->count()}}</span>
+                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                             </a>
-                            <a href="{{route("cart#item")}}" class="btn px-0 ml-3">
+                            <a href="" class="btn px-0 ml-3">
                                 <i class="fas fa-shopping-cart text-primary"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">{{Cart::instance('cart')->count()}}</span>
+                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
                             </a>
-                            <a href="" class="btn px-0 ml-3 text-white">
-                                <i class="fa-solid fa-user text-white"></i>
-                                 {{Auth::user()->name}}
-                            </a>
-                            <form action="{{route('logout')}}" method="post" class="d-inline">
-                                @csrf
-                                <button class="btn bg-dark text-white"><i class="fa-solid fa-right-from-bracket"></i>  Logout</button>
-                            </form>
+                            {{-- ----------user dorpdown----------  --}}
+                            <div class="dropdown show d-inline ms-3 me-5">
+                                <a class="btn bg-dark text-white dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa-solid fa-user text-white me-1"></i>
+                                    {{Auth::user()->name}}
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                  <a class="dropdown-item mb-2" href="{{route('profile#editPage')}}"><i class="fa-solid fa-user me-2"></i>Account</a>
+                                  <a class="dropdown-item mb-2" href="{{route('password#changePage')}}"><i class="fa-solid fa-key me-2"></i>Change Password</a>
+                                  <form action="{{route('logout')}}" method="post" class="d-inline">
+                                    @csrf
+                                    <button class="dropdown-item btn bg-dark rounded text-white"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</button>
+                                  </form>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </nav>
@@ -193,5 +206,6 @@
     <!-- Template Javascript -->
     <script src="{{asset('user/js/main.js')}}"></script>
 </body>
-
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </html>
