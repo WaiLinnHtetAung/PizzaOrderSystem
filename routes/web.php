@@ -94,6 +94,7 @@ Route::middleware(['auth'])->group(function () {
         //profile
         Route::prefix('profile')->group(function() {
             Route::get('edit', [UserController::class, 'editPage'])->name('profile#editPage');
+            Route::post('update/{id}', [UserController::class, 'updatePage'])->name('profile#updatePage');
         });
     });
 

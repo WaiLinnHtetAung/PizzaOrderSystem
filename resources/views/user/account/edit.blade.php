@@ -7,7 +7,7 @@
                 <div class="container-fluid">
                     <div class="row me-2">
                         <div class="col-lg-2 offset-10 ">
-                            <a href="{{ route('admin#profile') }}"><button class="btn bg-dark text-white my-3"><i
+                            <a href="{{ route('user#home') }}"><button class="btn bg-dark text-white my-3"><i
                                         class="fa-solid fa-arrow-left me-2"></i>Back</button></a>
                         </div>
                     </div>
@@ -19,7 +19,15 @@
                                 </div>
                                 <hr>
 
-                                <form action="{{route('admin#update', Auth::user()->id)}}" method="POST" enctype="multipart/form-data">
+                                {{-- --------------profile updated message----------- --}}
+                                @if (session('updateSuccess'))
+                                <div class="alert alert-success alert-dismissible fade show col-6 offset-4">
+                                    <i class="fa-solid fa-thumbs-up me-2"></i>&nbsp;<span>{{session('updateSuccess')}}</span>
+                                    <button type="button" data-bs-dismiss='alert' class="btn-close"></button>
+                                </div>
+                                @endif
+
+                                <form action="{{route('profile#updatePage', Auth::user()->id)}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                         <div class="col-3 offset-1 my-3">
@@ -32,7 +40,7 @@
                                             @endif
 
                                             <div class="mt-3">
-                                                <input type="file" name="image" id="" class="form-control @error('image') is-invalid @enderror" >
+                                                <input type="file" accept="image/*" name="image" id="" class="form-control @error('image') is-invalid @enderror" >
                                                 @error('image')
                                                     <div class="invalid-feedback">{{$message}}</div>
                                                 @enderror
