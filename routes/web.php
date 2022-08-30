@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\SortingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,6 +97,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('edit', [UserController::class, 'editPage'])->name('profile#editPage');
             Route::post('update/{id}', [UserController::class, 'updatePage'])->name('profile#updatePage');
         });
+
+        //sorting
+        Route::get('sort/list', [SortingController::class, 'pizzaList'])->name('sort#pizzaList');
     });
 
 });

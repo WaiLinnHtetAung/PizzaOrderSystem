@@ -45,12 +45,11 @@
                                 </div>
                                 <div class="ml-2">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Sorting</button>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#">Latest</a>
-                                            <a class="dropdown-item" href="#">Popularity</a>
-                                            <a class="dropdown-item" href="#">Best Rating</a>
-                                        </div>
+                                        <select name="sorting" id="sorting" class="form-select">
+                                            <option value="" selected disabled>Sort by <i class="fa-solid fa-arrow-down"></i></option>
+                                            <option value="asc">Low Price to High</option>
+                                            <option value="desc">High Price to Low</option>
+                                        </select>
                                     </div>
                                     <div class="btn-group ml-2">
                                         <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Showing</button>
@@ -64,7 +63,8 @@
                             </div>
                         </div>
                             {{-- ------products---------  --}}
-                            @foreach ($products as $product)
+                            <span id="product-list" class="row">
+                                @foreach ($products as $product)
                                 <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                                     <div class="product-item bg-light mb-4">
                                         <div class="product-img position-relative overflow-hidden">
@@ -91,6 +91,7 @@
                                     </div>
                                 </div>
                             @endforeach
+                            </span>
 
                     </div>
                 </div>
@@ -98,4 +99,102 @@
             </div>
         </div>
         <!-- Shop End -->
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+
+            $('#sorting').change(function() {
+                $sortData = $('#sorting').val();
+
+                if($sortData == 'asc') {
+                    $.ajax({
+                        type : 'get',
+                        url : 'http://localhost:8000/user/sort/list',
+                        data : {'status' : 'asc'},
+                        dataType : 'json',
+                        success : function(response) {
+                            $list = '';
+
+                            for($i=0;$i<response.length; $i++) {
+                                $list += `
+                                <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                                    <div class="product-item bg-light mb-4">
+                                        <div class="product-img position-relative overflow-hidden">
+                                            <img class="img-fluid w-100" style="height: 210px;" src="{{asset('storage/${response[$i].image}')}}" alt="">
+                                            <div class="product-action">
+                                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa-solid fa-circle-info"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="text-center py-4">
+                                            <a class="h6 text-decoration-none text-truncate" href="">${response[$i].name}</a>
+                                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                                {{-- <h5>20000 kyats</h5><h6 class="text-muted ml-2"><del>25000</del></h6> --}}
+                                                <h5>${response[$i].price} Kyats</h5>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                `;
+
+                                $('#product-list').html($list);
+                            }
+                        }
+                    });
+                } else if($sortData == 'desc') {
+                    $.ajax({
+                        type : 'get',
+                        url : 'http://localhost:8000/user/sort/list',
+                        data : {'status':'desc'},
+                        dataType : 'json',
+                        success : function(response) {
+                            $list = '';
+
+                            for($i=0;$i<response.length; $i++) {
+                                $list += `
+                                <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                                    <div class="product-item bg-light mb-4">
+                                        <div class="product-img position-relative overflow-hidden">
+                                            <img class="img-fluid w-100" style="height: 210px;" src="{{asset('storage/${response[$i].image}')}}" alt="">
+                                            <div class="product-action">
+                                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa-solid fa-circle-info"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="text-center py-4">
+                                            <a class="h6 text-decoration-none text-truncate" href="">${response[$i].name}</a>
+                                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                                {{-- <h5>20000 kyats</h5><h6 class="text-muted ml-2"><del>25000</del></h6> --}}
+                                                <h5>${response[$i].price} Kyats</h5>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                `;
+
+                                $('#product-list').html($list);
+                            }
+                        }
+                    });
+                }
+            })
+
+        });
+    </script>
 @endsection
