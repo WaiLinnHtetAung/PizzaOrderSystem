@@ -16,9 +16,14 @@
                             </div>
                             <hr>
 
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <a href="{{route('user#home')}}" class="text-dark"><label class="" for="price-all">All</label></a>
+                                {{-- <span class="badge border font-weight-normal">{{count($categories)}}</span> --}}
+                            </div>
+
                             @foreach ($categories as $category)
                                 <div class="d-flex align-items-center justify-content-between mb-3">
-                                    <label class="" for="price-all">{{$category->name}}</label>
+                                    <a href="{{route('filter#category', $category->id)}}" class="text-dark"><label class="" for="price-all">{{$category->name}}</label></a>
                                     {{-- <span class="badge border font-weight-normal">{{count($categories)}}</span> --}}
                                 </div>
                             @endforeach
@@ -38,6 +43,10 @@
                 <div class="col-lg-9 col-md-8">
                     <div class="row pb-3">
                         <div class="col-12 pb-1">
+                            <a href="{{route('cart#items')}}" class="btn px-0 ml-3">
+                                <i class="fas fa-shopping-cart text-dark"></i>
+                                <span class="badge text-dark border border-secondary rounded-circle" style="padding-bottom: 2px;">{{count($cart)}}</span>
+                            </a>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div>
                                     <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
@@ -64,33 +73,37 @@
                         </div>
                             {{-- ------products---------  --}}
                             <span id="product-list" class="row">
-                                @foreach ($products as $product)
-                                <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
-                                    <div class="product-item bg-light mb-4">
-                                        <div class="product-img position-relative overflow-hidden">
-                                            <img class="img-fluid w-100" style="height: 210px;" src="{{asset('storage/'.$product->image)}}" alt="">
-                                            <div class="product-action">
-                                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa-solid fa-circle-info"></i></a>
+                                @if (count($products) != 0)
+                                    @foreach ($products as $product)
+                                        <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                                            <div class="product-item bg-light mb-4">
+                                                <div class="product-img position-relative overflow-hidden">
+                                                    <img class="img-fluid w-100" style="height: 210px;" src="{{asset('storage/'.$product->image)}}" alt="">
+                                                    <div class="product-action">
+                                                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                                        <a class="btn btn-outline-dark btn-square" href="{{route('product#detail', $product->id)}}"><i class="fa-solid fa-circle-info"></i></a>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center py-4">
+                                                    <a class="h6 text-decoration-none text-truncate" href="">{{$product->name}}</a>
+                                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                                        {{-- <h5>20000 kyats</h5><h6 class="text-muted ml-2"><del>25000</del></h6> --}}
+                                                        <h5>{{$product->price}} Kyats</h5>
+                                                    </div>
+                                                    <div class="d-flex align-items-center justify-content-center mb-1">
+                                                        <small class="fa fa-star text-primary mr-1"></small>
+                                                        <small class="fa fa-star text-primary mr-1"></small>
+                                                        <small class="fa fa-star text-primary mr-1"></small>
+                                                        <small class="fa fa-star text-primary mr-1"></small>
+                                                        <small class="fa fa-star text-primary mr-1"></small>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="text-center py-4">
-                                            <a class="h6 text-decoration-none text-truncate" href="">{{$product->name}}</a>
-                                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                                {{-- <h5>20000 kyats</h5><h6 class="text-muted ml-2"><del>25000</del></h6> --}}
-                                                <h5>{{$product->price}} Kyats</h5>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-center mb-1">
-                                                <small class="fa fa-star text-primary mr-1"></small>
-                                                <small class="fa fa-star text-primary mr-1"></small>
-                                                <small class="fa fa-star text-primary mr-1"></small>
-                                                <small class="fa fa-star text-primary mr-1"></small>
-                                                <small class="fa fa-star text-primary mr-1"></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                                    @endforeach
+                                @else
+                                    <p class="text-center bg-warning col-6 fs-4 offset-3 shadow py-3">There is no pizza.</p>
+                                @endif
                             </span>
 
                     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use Storage;
+use App\Models\Cart;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
@@ -19,8 +20,9 @@ class UserController extends Controller
 
         $products = Product::orderBy('id', 'desc')->get();
         $categories = Category::get();
+        $cart = Cart::where('user_id', auth()->user()->id)->get();
 
-        return view('user.main.home', compact('products','categories'));
+        return view('user.main.home', compact('products','categories', 'cart'));
     }
 
     // ---------user password change----------
@@ -83,6 +85,21 @@ class UserController extends Controller
         User::where('id', $id)->update($data);
 
         return redirect()->back()->with(['updateSuccess' => 'Your profile is updated successfully']);
+    }
+
+    // -----------filter category---------
+    public function filter($id) {
+        $products = Product::where('category_id', $id)->orderBy('created_at')->get();
+        $categories = Category::get();
+
+        return view('user.main.home', compact('products', 'categories'));
+    }
+
+    // -------------product detail----------
+    public function productDetail($id) {
+        $product = Product::where('id', $id)->first();
+        $productLists = Product::get();
+        return view('user.main.detail', compact('product', 'productLists'));
     }
 
 

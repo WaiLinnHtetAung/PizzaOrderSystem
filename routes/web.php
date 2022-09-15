@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\SortingController;
 
@@ -100,6 +101,18 @@ Route::middleware(['auth'])->group(function () {
 
         //sorting
         Route::get('sort/list', [SortingController::class, 'pizzaList'])->name('sort#pizzaList');
+
+        //product category
+        Route::get('filter/{id}', [UserController::class, 'filter'])->name('filter#category');
+
+        //product detail and cart
+        Route::prefix('product')->group(function() {
+            Route::get('detail/{id}', [UserController::class, 'productDetail'])->name('product#detail');
+
+            // Route::get('cart',class, 'addCart'])->name('add#cart');
+            Route::post('cart', [CartController::class, 'addCart'])->name('add#cart');
+            Route::get('cart', [CartController::class, 'cart'])->name('cart#items');
+        });
     });
 
 });
