@@ -16,15 +16,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" >
 
     <!-- Font Awesome -->
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"> --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
 
     <!-- Libraries Stylesheet -->
     <link href="{{asset('user/lib/animate/animate.min.css')}}" rel="stylesheet">
-    <link href="{{asset('user/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+    {{-- <link href="{{asset('user/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet"> --}}
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('user/css/style.css')}}" rel="stylesheet">
@@ -182,7 +182,7 @@
                 </p>
             </div>
             <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
+                {{-- <img class="img-fluid" src="img/payments.png" alt=""> --}}
             </div>
         </div>
     </div>
@@ -200,8 +200,8 @@
     <script src="{{asset('user/lib/owlcarousel/owl.carousel.min.js')}}"></script>
 
     <!-- Contact Javascript File -->
-    <script src="{{asset('user/mail/jqBootstrapValidation.min.js')}}"></script>
-    <script src="{{asset('user/mail/contact.js')}}"></script>
+    {{-- <script src="{{asset('user/mail/jqBootstrapValidation.min.js')}}"></script> --}}
+    {{-- <script src="{{asset('user/mail/contact.js')}}"></script> --}}
 
     <!-- Template Javascript -->
     <script src="{{asset('user/js/main.js')}}"></script>

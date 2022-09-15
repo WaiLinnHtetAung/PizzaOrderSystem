@@ -91,8 +91,9 @@ class UserController extends Controller
     public function filter($id) {
         $products = Product::where('category_id', $id)->orderBy('created_at')->get();
         $categories = Category::get();
+        $cart = Cart::where('user_id', auth()->user()->id)->get();
 
-        return view('user.main.home', compact('products', 'categories'));
+        return view('user.main.home', compact('products', 'categories', 'cart'));
     }
 
     // -------------product detail----------
