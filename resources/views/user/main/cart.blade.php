@@ -20,7 +20,10 @@
                             @foreach ($cartItems as $item)
                                 <tr id="item">
                                     <td class="align-middle"><img style="width: 30px;" src="{{asset("storage/$item->image")}}" alt="" style="width: 50px;"></td>
-                                    <td class="align-middle">{{$item->product_name}}</td>
+                                    <td class="align-middle">{{$item->product_name}}
+                                    <input type="hidden" class="productId" value="{{$item->product_id}}">
+                                    <input type="hidden" class="userId" value="{{$item->user_id}}">
+                                    </td>
                                     <td class="align-middle"><span id="price">{{$item->product_price}}</span> ks</td>
                                     <td class="align-middle">
                                         <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -62,7 +65,7 @@
                                 <h5>Total</h5>
                                 <h5 id="finalPrice">{{$totalPrice + 3000}}</h5>
                             </div>
-                            <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                            <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" id="checkoutBtn">Proceed To Checkout</button>
                         </div>
                     </div>
                 </div>
@@ -127,6 +130,37 @@
 
                 })
             }
+
+
+            $('#checkoutBtn').click(function() {
+
+                $orderList = [];
+                $random = Math.floor(Math.random() * 10000000001); //for same order code for all row
+
+                $('#dataTable tr').each(function(index, row) {
+                    $orderList.push({
+                        'user_id' : $(row).find('.userId').val(),
+                        'product_id' : $(row).find('.productId').val(),
+                        'qty' : $(row).find('#cartQty').val(),
+                        'total' : $(row).find('#subtotal').text().replace('ks', '')*1,
+                        'order_code' : 'POS'+$random,
+                    });
+                })
+
+                $.ajax({
+                    type : 'get',
+                    url : "{{route('product#order')}}",
+                    data : Object.assign({}, $orderList),
+                    success : function(res) {
+                        if(res.status == 'success') {
+                            alert(res.message);
+                            window.location.href = "{{route('user#home')}}";
+                        }
+                    }
+                })
+
+
+            })
 
         })
     </script>

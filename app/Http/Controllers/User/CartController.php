@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderList;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -36,7 +38,30 @@ class CartController extends Controller
     }
 
 
+    // ---------order---------
+    public function order(Request $request) {
 
+        $totalPrice = 0;
+        foreach($request->all() as $item) {
+            $orderData = OrderList::create($item);
+
+            $totalPrice += $orderData->total;
+        }
+
+        logger([$orderData->order_code, $totalPrice]);
+
+        Cart::where('user_id', auth()->user()->id)->delete();
+
+        Order::create([
+            'user_id' => auth()->user()->id,
+            'order_code' => $orderData->order_code,
+            'total_price' => $totalPrice+3000,
+        ]);
+
+        $response = ['status' => 'success', 'message'=> 'Ordered successfully'];
+
+        return response()->json($response, 200);
+    }
 
 
 

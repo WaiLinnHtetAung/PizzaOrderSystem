@@ -112,6 +112,9 @@ Route::middleware(['auth'])->group(function () {
             // Route::get('cart',class, 'addCart'])->name('add#cart');
             Route::post('cart', [CartController::class, 'addCart'])->name('add#cart');
             Route::get('cart', [CartController::class, 'cart'])->name('cart#items');
+
+            //proceed to checkout
+            Route::get('checkout', [CartController::class, 'order'])->name('product#order');
         });
     });
 
