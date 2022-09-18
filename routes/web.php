@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\User\CartController;
@@ -77,6 +78,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('edit/{id}', [ProductController::class, 'editPage'])->name('products#editPage');
             Route::post('update/{id}', [ProductController::class, 'update'])->name('products#update');
         });
+
+        //Order List
+        Route::prefix('order')->group(function() {
+            Route::get('list', [OrderController::class, 'orderList'])->name('order#list');
+            Route::get('status', [OrderController::class, 'orderStatus'])->name('order#status');
+        });
     });
 
 
@@ -115,6 +122,9 @@ Route::middleware(['auth'])->group(function () {
 
             //proceed to checkout
             Route::get('checkout', [CartController::class, 'order'])->name('product#order');
+            Route::get('order/history', [CartController::class, 'history'])->name('order#history');
+            Route::get('clear/cart', [CartController::class, 'clearCart'])->name('clear#cart');
+            Route::get('clear/cartRow', [CartController::class, 'clearRow'])->name('clear#cartRow');
         });
     });
 

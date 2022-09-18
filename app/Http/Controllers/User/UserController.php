@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Storage;
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -21,8 +22,9 @@ class UserController extends Controller
         $products = Product::orderBy('id', 'desc')->get();
         $categories = Category::get();
         $cart = Cart::where('user_id', auth()->user()->id)->get();
+        $orders = Order::where('user_id', auth()->user()->id)->get();
 
-        return view('user.main.home', compact('products','categories', 'cart'));
+        return view('user.main.home', compact('products','categories', 'cart', 'orders'));
     }
 
     // ---------user password change----------
@@ -92,8 +94,9 @@ class UserController extends Controller
         $products = Product::where('category_id', $id)->orderBy('created_at')->get();
         $categories = Category::get();
         $cart = Cart::where('user_id', auth()->user()->id)->get();
+        $orders = Order::where('user_id', auth()->user()->id)->get();
 
-        return view('user.main.home', compact('products', 'categories', 'cart'));
+        return view('user.main.home', compact('products', 'categories', 'cart', 'orders'));
     }
 
     // -------------product detail----------

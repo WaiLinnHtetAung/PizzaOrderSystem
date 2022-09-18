@@ -63,6 +63,33 @@ class CartController extends Controller
         return response()->json($response, 200);
     }
 
+        public function history() {
+
+            $orders = Order::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(5);
+
+            return view('user.main.history', compact('orders'));
+        }
+
+        public function clearCart() {
+            Cart::where('user_id', auth()->user()->id)->delete();
+
+            $response = ['status' => 'clear cart success'];
+
+            return response()->json($response, 200);
+        }
+
+        public function clearRow(Request $request) {
+            Cart::where('user_id', auth()->user()->id)
+                  ->where('product_id', $request->productId)
+                  ->where('id', $request->orderId)
+                  ->delete();
+
+            $cartItems = Cart::where('user_id', auth()->user()->id)->get();
+
+            $response = ['status' => 'success', 'cartItems' => $cartItems];
+
+            return response()->json($response, 200);
+        }
 
 
 

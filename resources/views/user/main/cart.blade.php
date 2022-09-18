@@ -22,6 +22,7 @@
                                     <td class="align-middle"><img style="width: 30px;" src="{{asset("storage/$item->image")}}" alt="" style="width: 50px;"></td>
                                     <td class="align-middle">{{$item->product_name}}
                                     <input type="hidden" class="productId" value="{{$item->product_id}}">
+                                    <input type="hidden" id="orderId" value="{{$item->id}}">
                                     <input type="hidden" class="userId" value="{{$item->user_id}}">
                                     </td>
                                     <td class="align-middle"><span id="price">{{$item->product_price}}</span> ks</td>
@@ -63,9 +64,10 @@
                         <div class="pt-2">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5>Total</h5>
-                                <h5 id="finalPrice">{{$totalPrice + 3000}}</h5>
+                                <h5 id="finalPrice">{{$totalPrice + 3000}} ks</h5>
                             </div>
                             <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" id="checkoutBtn">Proceed To Checkout</button>
+                            <button class="btn btn-block btn-danger font-weight-bold my-3 py-3" id="clearCart">Clear Cart</button>
                         </div>
                     </div>
                 </div>
@@ -109,11 +111,30 @@
             })
 
             $('.removeBtn').click(function() {
+
                 $parentNode = $(this).parents('tr');
+                $productId = $parentNode.find('.productId').val();
+                $orderId = $parentNode.find('#orderId').val();
 
-                $parentNode.remove();
+                $.ajax({
+                    type : 'get',
+                    data : {
+                        'productId' : $productId,
+                        'orderId' : $orderId,
+                    },
+                    url : "{{route('clear#cartRow')}}",
+                    success : function(res) {
 
-                TotalPrice();
+                        if(Object.keys(res.cartItems).length == 0) {
+                            $parentNode.remove();
+                            $('#subtotalPrice').html(0 + 'ks');
+                            $('#finalPrice').html(3000 + 'ks');
+                        }
+
+                        $parentNode.remove();
+                        TotalPrice();
+                    }
+                })
             })
 
                 // ---------get subtotal price---------
@@ -160,6 +181,21 @@
                 })
 
 
+            })
+
+            $('#clearCart').click(function() {
+
+                $('#dataTable tr').remove();
+                $('#subtotalPrice').html(0 + 'ks');
+                $('#finalPrice').html(3000 + 'ks');
+
+                $.ajax({
+                    type : 'get',
+                    url : "{{route('clear#cart')}}",
+                    success : function(res) {
+                        alert(res.status);
+                    }
+                })
             })
 
         })

@@ -43,9 +43,14 @@
                 <div class="col-lg-9 col-md-8">
                     <div class="row pb-3">
                         <div class="col-12 pb-1">
-                            <a href="{{route('cart#items')}}" class="btn px-0 ml-3">
-                                <i class="fas fa-shopping-cart text-dark"></i>
-                                <span class="badge text-dark border border-secondary rounded-circle" style="padding-bottom: 2px;">{{count($cart)}}</span>
+                            <a href="{{route('cart#items')}}" class="btn btn-dark rounded p-2 ml-3 position-relative">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: .9rem !important;" >{{count($cart)}}</span>
+                            </a>
+                            <a href="{{route('order#history')}}" class="btn btn-dark rounded p-2 ml-3 position-relative">
+                                <i class="fa-solid fa-clock-rotate-left "></i>
+                                <span class="text-white" style="padding-bottom: 2px;">History</span>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: .9rem !important;" >{{count($orders)}}</span>
                             </a>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div>
