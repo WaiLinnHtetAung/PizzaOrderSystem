@@ -100,13 +100,14 @@
                         <tbody id="dataList">
                             @foreach ($orders as $order)
                                 <tr>
+                                    <input type="hidden" class="orderId" value="{{$order->id}}">
                                     <td>{{$order->user_id}}</td>
                                     <td>{{$order->user_name}}</td>
                                     <td>{{$order->created_at->format('F-j-Y')}}</td>
                                     <td>{{$order->order_code}}</td>
                                     <td>{{$order->total_price}}</td>
                                     <td>
-                                        <select name="status" id="" class="form-select">
+                                        <select name="status" class="form-select changeStatus" >
                                             <option value="0" @if($order->status == 0) selected @endif>Pending</option>
                                             <option value="1" @if($order->status == 1) selected @endif>Accept</option>
                                             <option value="2" @if($order->status == 2) selected @endif>Reject</option>
@@ -149,26 +150,73 @@
                     success : function(res) {
                         $list = '';
                         for($i = 0; $i < res.length; $i++) {
+
+                            //date with js
+                            $months=['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                            $dbDate = new Date(res[$i].created_at);
+                            $orderDate = $months[$dbDate.getMonth()]+'-'+$dbDate.getDate()+'-'+$dbDate.getFullYear();
+
+                            if($orderStatus == 0 ) {
+                                $status = `
+                                    <select name="status" id="" class="form-select changeStatus">
+                                        <option value="0"  selected>Pending</option>
+                                        <option value="1" >Accept</option>
+                                        <option value="2" >Reject</option>
+                                    </select>
+                                ` ;
+                            } else if ($orderStatus == 1){
+                                $status = `
+                                    <select name="status" id="" class="form-select changeStatus">
+                                        <option value="0"  >Pending</option>
+                                        <option value="1" selected>Accept</option>
+                                        <option value="2" >Reject</option>
+                                    </select>
+                                ` ;
+                            } else if($orderStatus == 2) {
+                                $status = `
+                                    <select name="status" id="" class="form-select changeStatus">
+                                        <option value="0" >Pending</option>
+                                        <option value="1" >Accept</option>
+                                        <option value="2" selected>Reject</option>
+                                    </select>
+                                ` ;
+                            }
+
                             $list += `
                             <tr>
+                                <input type="hidden" class="orderId" value="${res[$i].id}">
                                     <td>${res[$i].user_id}</td>
                                     <td>${res[$i].user_name}</td>
-                                    <td>${res[$i].created_at}</td>
+                                    <td>${$orderDate}</td>
                                     <td>${res[$i].order_code}</td>
                                     <td>${res[$i].total_price}</td>
-                                    <td>
-                                        <select name="status" id="" class="form-select">
-                                            <option value="0" @if($order->status == 0) selected @endif>Pending</option>
-                                            <option value="1" @if($order->status == 1) selected @endif>Accept</option>
-                                            <option value="2" @if($order->status == 2) selected @endif>Reject</option>
-                                        </select>
-                                    </td>
+                                    <td>${$status}</td>
                                 </tr>
                             `;
                         }
 
                         $('#dataList').html($list);
                         $('.orderListTotal').html('Total - ' + res.length);
+                    }
+                })
+            })
+
+            // ---------change order status----------
+            $(document).on('click', '.changeStatus', function(){
+                $updatedStatus = $(this).val();
+
+                $parentNode = $(this).parents("tr");
+                $orderId = $parentNode.find('.orderId').val();
+
+                $.ajax({
+                    type : 'get',
+                    url : "{{route('change#status')}}",
+                    data : {
+                        'status' : $updatedStatus,
+                        'orderId' : $orderId,
+                    },
+                    success : function(res) {
+
                     }
                 })
             })

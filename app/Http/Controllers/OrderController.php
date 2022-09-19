@@ -15,7 +15,6 @@ class OrderController extends Controller
                         ->orderBy('created_at', 'desc')
                         ->get();
 
-
         return view('admin.order.list', compact('orders'));
     }
 
@@ -33,5 +32,12 @@ class OrderController extends Controller
         }
 
         return response()->json($orderStatus, 200);
+    }
+
+    public function changeStatus(Request $request) {
+        Order::where('id', $request->orderId)->update([
+            'status' => $request->status,
+        ]);
+
     }
 }

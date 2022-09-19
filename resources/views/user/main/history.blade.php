@@ -25,7 +25,7 @@
                                             <span class="text-info"><i class="fa-solid fa-hourglass-start me-2"></i>Pending...</span>
                                         @elseif ($order->status == 1)
                                             <span class="text-success"><i class="fa-solid fa-check me-2"></i>Success</span>
-                                        @elseif ($order->status == 3)
+                                        @elseif ($order->status == 2)
                                             <span class="text-danger"><i class="fa-solid fa-triangle-exclamation me-2"></i>Rejected</span>
                                         @endif
                                     </td>
