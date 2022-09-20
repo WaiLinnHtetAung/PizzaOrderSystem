@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderList;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -19,7 +20,7 @@ class OrderController extends Controller
     }
 
     public function orderStatus(Request $request) {
-        logger($request);
+        // logger($request);
 
         $orderStatus = Order::select('orders.*', 'users.name as user_name')
                               ->leftJoin('users', 'users.id', 'orders.user_id')
@@ -39,5 +40,20 @@ class OrderController extends Controller
             'status' => $request->status,
         ]);
 
+    }
+
+    // ------order detail ---------
+    public function orderInfo($orderCode) {
+
+        //for total price
+        $order = Order::where('order_code', $orderCode)->first();
+
+        $orderItems = OrderList::select('order_lists.*', 'users.name as user_name', 'products.name as product_name', 'products.image as product_image')
+                                ->leftJoin('users', 'users.id', 'order_lists.user_id')
+                                ->leftJoin('products', 'products.id', 'order_lists.product_id')
+                                ->where('order_code', $orderCode)->get();
+
+
+        return view('admin.order.orderItem', compact('orderItems', 'order'));
     }
 }

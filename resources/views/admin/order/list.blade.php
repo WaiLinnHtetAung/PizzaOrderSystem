@@ -104,7 +104,7 @@
                                     <td>{{$order->user_id}}</td>
                                     <td>{{$order->user_name}}</td>
                                     <td>{{$order->created_at->format('F-j-Y')}}</td>
-                                    <td>{{$order->order_code}}</td>
+                                    <td><a href="{{route('order#info', $order->order_code)}}">{{$order->order_code}}</a></td>
                                     <td>{{$order->total_price}}</td>
                                     <td>
                                         <select name="status" class="form-select changeStatus" >
