@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\SortingController;
@@ -86,9 +88,18 @@ Route::middleware(['auth'])->group(function () {
             Route::get('changeStatus', [OrderController::class, 'changeStatus'])->name('change#status');
             Route::get('orderInfo/{orderCode}', [OrderController::class, 'orderInfo'])->name('order#info');
         });
+
+        //user list
+        Route::get('user/list', [AdminUserController::class, 'userList'])->name('user#list');
+        Route::get('user/change', [AdminUserController::class, 'changeRole'])->name('user#change');
+
+        //contact message
+        Route::get('customer/messages', [AdminController::class, 'messages'])->name('customer#messages');
+
     });
 
-
+        // --- view count---
+        Route::get('product/viewCount', [AdminUserController::class, 'viewCount'])->name('increase#viewCount');
 
 
     // user
@@ -128,6 +139,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('clear/cart', [CartController::class, 'clearCart'])->name('clear#cart');
             Route::get('clear/cartRow', [CartController::class, 'clearRow'])->name('clear#cartRow');
         });
+
+        //contact
+        Route::get('/contact', [ContactController::class, 'contact'])->name('user#contact');
+        Route::post('/contact/message', [ContactController::class, 'message'])->name('contact#message');
+
     });
 
 });

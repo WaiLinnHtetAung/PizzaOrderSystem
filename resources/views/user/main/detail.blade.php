@@ -31,7 +31,7 @@
                                 <small class="fas fa-star-half-alt"></small>
                                 <small class="far fa-star"></small>
                             </div>
-                            <small class="pt-1">{{$product->view_count}} <i class="fa-solid fa-eye"></i></small>
+                            <small class="pt-1">{{$product->view_count+1}} <i class="fa-solid fa-eye"></i></small>
                         </div>
 
                         {{-- --------user id and product id-----------  --}}
@@ -231,6 +231,17 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+            //increase view count
+            $.ajax({
+                type : 'get',
+                url : "{{route('increase#viewCount')}}",
+                data : { 'productId' : $('#productId').val()},
+                success : function(res) {
+
+                }
+            })
+
+
             $('.addCartBtn').click(function() {
                 $count = $('#orderCount').val();
                 $userId = $('#userId').val();
@@ -257,6 +268,8 @@
 
                 })
             })
+
+
         });
     </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Storage;
 use App\Models\User;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -158,6 +159,13 @@ class AdminController extends Controller
             'gender' => $request->gender,
             'address' => $request->address,
         ];
+    }
+
+    //contact message
+    public function messages() {
+        $messages = Contact::all();
+
+        return view('admin.contact.messages', compact('messages'));
     }
 
 

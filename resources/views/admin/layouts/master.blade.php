@@ -71,6 +71,16 @@
                                 <i class="fa-solid fa-rectangle-list"></i>Order List
                             </a>
                         </li>
+                        <li>
+                            <a href="{{route('user#list')}}">
+                                <i class="fa-solid fa-users"></i>User List
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('customer#messages')}}">
+                                <i class="fa-solid fa-message"></i>Contact Messages
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -227,7 +237,7 @@
     <script src="{{asset('admin/vendor/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
     <script src="{{asset('admin/vendor/chartjs/Chart.bundle.min.js')}}"></script>
     <script src="{{asset('admin/vendor/select2/select2.min.js')}}">
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     </script>
 
